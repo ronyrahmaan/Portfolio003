@@ -38,8 +38,8 @@ export function Experience() {
     {
       icon: MapPin,
       title: 'Research Focus',
-      content: 'AI/ML for Transportation Infrastructure Safety',
-      location: 'LiDAR • Traffic Analysis • Road Safety'
+      content: 'Applied AI & Machine Learning Research',
+      location: 'Deep Learning • Computer Vision • NLP • MLOps'
     }
   ];
 

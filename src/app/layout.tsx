@@ -46,16 +46,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://github.com/ronyrahmaan",
+    url: "https://md-rahman-ai.vercel.app",
     title: "Md A Rahman - AI Researcher Portfolio",
     description: "Interactive AI portfolio showcasing research in machine learning, NLP, and sensor data systems",
     siteName: "Md A Rahman Portfolio",
+    images: [
+      {
+        url: "https://md-rahman-ai.vercel.app/landing-memojis.png",
+        width: 1200,
+        height: 630,
+        alt: "Md A Rahman - AI Researcher Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Md A Rahman - AI Researcher Portfolio",
     description: "AI Researcher and Graduate Research Assistant at Texas Tech University",
     creator: "@ronstagrram",
+    images: ["https://md-rahman-ai.vercel.app/landing-memojis.png"],
   },
   icons: {
     icon: [

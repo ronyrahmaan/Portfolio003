@@ -224,6 +224,7 @@ export function TypingText({
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Cursor blinking
@@ -235,44 +236,49 @@ export function TypingText({
   }, []);
 
   useEffect(() => {
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
     const targetText = texts[currentTextIndex];
-    let timeout: NodeJS.Timeout;
 
     if (!isDeleting) {
       // Typing
       if (currentText.length < targetText.length) {
-        timeout = setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setCurrentText(targetText.slice(0, currentText.length + 1));
         }, typingSpeed);
-      } else {
+      } else if (currentText === targetText) {
         // Pause before deleting
-        timeout = setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           setIsDeleting(true);
         }, pauseTime);
       }
     } else {
       // Deleting
       if (currentText.length > 0) {
-        timeout = setTimeout(() => {
-          setCurrentText(currentText.slice(0, -1));
+        timeoutRef.current = setTimeout(() => {
+          setCurrentText(prev => prev.slice(0, -1));
         }, deletingSpeed);
       } else {
         // Move to next text
-        timeout = setTimeout(() => {
-          setIsDeleting(false);
-          const newIndex = (currentTextIndex + 1) % texts.length;
-          setCurrentTextIndex(newIndex);
-        }, 100);
+        const newIndex = (currentTextIndex + 1) % texts.length;
+        setCurrentTextIndex(newIndex);
+        setIsDeleting(false);
+        // Notify parent immediately when index changes
+        if (onIndexChange) {
+          onIndexChange(newIndex);
+        }
       }
     }
 
-    return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime]);
-
-  // Notify parent component when index changes
-  useEffect(() => {
-    onIndexChange?.(currentTextIndex);
-  }, [currentTextIndex]);
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime, onIndexChange]);
 
   return (
     <span className={className}>

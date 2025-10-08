@@ -38,7 +38,7 @@ interface HelperBoostProps {
 // Modern, engaging prompts tailored to showcase AI research expertise
 const questions = {
   About: 'Tell me about yourself and your background',
-  'Projects/Research': 'Show me your AI research projects',
+  'Projects/Research': 'Show me your AI research projects and work',
   'Tech Stack': 'What are your technical skills and expertise?',
   Achievements: 'What are your achievements and accomplishments?',
   Connect: 'How can I contact you?',
@@ -219,7 +219,7 @@ export default function HelperBoost({
                     key={key}
                     onClick={() => handleQuestionClick(key)}
                     variant="outline"
-                    className="border-border hover:bg-border/30 h-auto min-w-[100px] flex-shrink-0 cursor-pointer rounded-xl border bg-white/80 px-4 py-3 shadow-none backdrop-blur-sm transition-all duration-200 ease-out hover:scale-[1.02] active:scale-95"
+                    className="border-border hover:bg-border/30 h-auto min-w-[120px] flex-shrink-0 cursor-pointer rounded-xl border bg-white/80 px-4 py-3 shadow-none backdrop-blur-sm transition-all duration-200 ease-out hover:scale-[1.02] active:scale-95"
                     style={{transform: 'translateZ(0)', backfaceVisibility: 'hidden'}}
                   >
                     <div className="flex items-center gap-3 text-gray-700">

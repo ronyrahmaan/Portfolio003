@@ -262,13 +262,17 @@ export function TypingText({
           setIsDeleting(false);
           const newIndex = (currentTextIndex + 1) % texts.length;
           setCurrentTextIndex(newIndex);
-          onIndexChange?.(newIndex);
         }, 100);
       }
     }
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime, onIndexChange]);
+  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime]);
+
+  // Notify parent component when index changes
+  useEffect(() => {
+    onIndexChange?.(currentTextIndex);
+  }, [currentTextIndex]);
 
   return (
     <span className={className}>

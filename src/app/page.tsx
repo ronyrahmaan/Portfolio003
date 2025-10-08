@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // Import the modal component that shows collaboration details
 import OpenToCollaborateModal from '@/components/open-to-collaborate-modal';
 
@@ -72,9 +72,9 @@ export default function Home() {
   const [roleIndex, setRoleIndex] = useState(0);
 
   // Role index will be updated by TypingText callback
-  const handleRoleIndexChange = useCallback((index: number) => {
+  const handleRoleIndexChange = (index: number) => {
     setRoleIndex(index);
-  }, []);
+  };
 
   const goToChat = (query: string) =>
     router.push(`/chat?query=${encodeURIComponent(query)}`);

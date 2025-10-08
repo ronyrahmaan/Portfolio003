@@ -156,7 +156,7 @@ export function Experience() {
             Ready to Collaborate on Transportation Innovation?
           </h3>
           <p className="mt-2 text-blue-100">
-            Let's discuss how AI can transform transportation infrastructure and safety
+            Let's discuss how AI can revolutionize transportation infrastructure, enhance safety systems, optimize traffic flow, and advance autonomous vehicle technologies
           </p>
         </div>
       </motion.div>

@@ -38,7 +38,7 @@ interface HelperBoostProps {
 // Modern, engaging prompts tailored to showcase AI research expertise
 const questions = {
   About: 'Tell me about yourself and your background',
-  'Research/Projects': 'Show me your AI research projects',
+  'Projects/Research': 'Show me your AI research projects',
   'Tech Stack': 'What are your technical skills and expertise?',
   Achievements: 'What are your achievements and accomplishments?',
   Connect: 'How can I contact you?',
@@ -47,7 +47,7 @@ const questions = {
 
 const questionConfig = [
   { key: 'About', color: '#00F5FF', icon: User, gradient: 'from-cyan-500 to-blue-500' },
-  { key: 'Research/Projects', color: '#FF00FF', icon: Microscope, gradient: 'from-purple-500 to-pink-500' },
+  { key: 'Projects/Research', color: '#FF00FF', icon: Microscope, gradient: 'from-purple-500 to-pink-500' },
   { key: 'Tech Stack', color: '#00FF88', icon: Code2, gradient: 'from-green-500 to-teal-500' },
   { key: 'Achievements', color: '#FFD700', icon: Trophy, gradient: 'from-yellow-500 to-orange-500' },
   { key: 'Connect', color: '#FF1493', icon: MessageSquare, gradient: 'from-pink-500 to-rose-500' },

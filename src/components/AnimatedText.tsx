@@ -220,8 +220,11 @@ export function TypingText({
   pauseTime = 2000,
   onIndexChange
 }: TypingTextProps) {
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
 
   // Cursor blinking
@@ -232,58 +235,55 @@ export function TypingText({
     return () => clearInterval(cursorInterval);
   }, []);
 
-  // Main typing animation with single effect
+  // Handle index change notification
   useEffect(() => {
-    let charIndex = 0;
-    let isDeleting = false;
-    let textIndex = 0;
+    if (onIndexChange) {
+      onIndexChange(textIndex);
+    }
+  }, [textIndex, onIndexChange]);
+
+  // Main animation logic
+  useEffect(() => {
     let timeout: NodeJS.Timeout;
 
-    const animate = () => {
-      const currentFullText = texts[textIndex];
-
-      if (!isDeleting) {
-        // Typing forward
-        if (charIndex < currentFullText.length) {
-          setDisplayText(currentFullText.slice(0, charIndex + 1));
-          charIndex++;
-          timeout = setTimeout(animate, typingSpeed);
-        } else {
-          // Finished typing, pause then start deleting
-          timeout = setTimeout(() => {
-            isDeleting = true;
-            animate();
-          }, pauseTime);
-        }
+    if (isPaused) {
+      // Wait during pause
+      timeout = setTimeout(() => {
+        setIsPaused(false);
+        setIsDeleting(true);
+      }, pauseTime);
+    } else if (!isDeleting) {
+      // Typing
+      const currentText = texts[textIndex];
+      if (charIndex < currentText.length) {
+        setDisplayText(currentText.substring(0, charIndex + 1));
+        timeout = setTimeout(() => {
+          setCharIndex(charIndex + 1);
+        }, typingSpeed);
       } else {
-        // Deleting
-        if (charIndex > 0) {
-          charIndex--;
-          setDisplayText(currentFullText.slice(0, charIndex));
-          timeout = setTimeout(animate, deletingSpeed);
-        } else {
-          // Finished deleting, move to next text
-          isDeleting = false;
-          textIndex = (textIndex + 1) % texts.length;
-          setCurrentTextIndex(textIndex);
-
-          // Notify parent of index change
-          if (onIndexChange) {
-            onIndexChange(textIndex);
-          }
-
-          timeout = setTimeout(animate, 100);
-        }
+        // Finished typing current word
+        setIsPaused(true);
       }
-    };
-
-    // Start animation
-    timeout = setTimeout(animate, 100);
+    } else {
+      // Deleting
+      if (charIndex > 0) {
+        const currentText = texts[textIndex];
+        setDisplayText(currentText.substring(0, charIndex - 1));
+        timeout = setTimeout(() => {
+          setCharIndex(charIndex - 1);
+        }, deletingSpeed);
+      } else {
+        // Finished deleting, move to next text
+        setIsDeleting(false);
+        setTextIndex((textIndex + 1) % texts.length);
+        setCharIndex(0);
+      }
+    }
 
     return () => {
       if (timeout) clearTimeout(timeout);
     };
-  }, [texts, typingSpeed, deletingSpeed, pauseTime, onIndexChange]);
+  }, [charIndex, textIndex, isDeleting, isPaused, texts, typingSpeed, deletingSpeed, pauseTime]);
 
   return (
     <span className={className}>

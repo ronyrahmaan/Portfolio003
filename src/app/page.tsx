@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import WelcomeModal from '@/components/welcome-modal';
 import AnimatedText from '@/components/AnimatedText';
 import { SimpleTypingText } from '@/components/SimpleTypingText';
+import { RoleTyping } from '@/components/RoleTyping';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -56,26 +57,7 @@ export default function Home() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Dynamic roles that rotate after the main heading. Each role represents a
-  // professional descriptor relevant to Rahman's expertise. Colors map to
-  // each role for subtle visual variation. The index increments every few
-  // seconds using a timer.
-  const roles = [
-    'AI/ML Engineer',
-    'AI Researcher',
-    'Generative AI Enthusiast',
-  ];
-  const roleColors = [
-    'text-blue-600 dark:text-blue-400',
-    'text-purple-600 dark:text-purple-400',
-    'text-pink-600 dark:text-pink-400',
-  ];
-  const [roleIndex, setRoleIndex] = useState(0);
-
-  // Role index will be updated by TypingText callback
-  const handleRoleIndexChange = (index: number) => {
-    setRoleIndex(index);
-  };
+  // Removed role state management as it's now handled inside RoleTyping component
 
   const goToChat = (query: string) =>
     router.push(`/chat?query=${encodeURIComponent(query)}`);
@@ -163,44 +145,7 @@ export default function Home() {
           />
         </h1>
         {/* Dynamically rotating descriptors with modern animations */}
-        <motion.div
-          key={roleIndex}
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          }}
-          exit={{ opacity: 0, y: -20, scale: 0.9 }}
-          transition={{
-            duration: 0.5
-          }}
-          className="mt-3 relative"
-        >
-          <div className="absolute inset-0 blur-xl opacity-50">
-            <div className={`h-full w-full ${roleColors[roleIndex]} animate-pulse`} />
-          </div>
-          <div
-            className={`relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-              bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm
-              border border-white/20 shadow-lg
-              ${roleColors[roleIndex]}
-              text-xs font-medium tracking-wide sm:text-sm md:text-sm`}
-          >
-            <span className="relative font-space-grotesk">
-              <SimpleTypingText
-                texts={roles}
-                className="inline-block"
-                onIndexChange={handleRoleIndexChange}
-              />
-            </span>
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-2 h-2 rounded-full bg-current opacity-60"
-            />
-          </div>
-        </motion.div>
+        <RoleTyping />
       </motion.div>
 
       {/* centre portrait */}

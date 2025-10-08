@@ -260,12 +260,12 @@ export function TypingText({
     }, isDeleting ? deletingSpeed : typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime, onIndexChange]);
+  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime]);
 
-  // Call onIndexChange when component mounts to sync initial state
+  // Call onIndexChange when component mounts and when index changes
   useEffect(() => {
     onIndexChange?.(currentTextIndex);
-  }, [onIndexChange]);
+  }, [currentTextIndex, onIndexChange]);
 
   return (
     <span className={className}>

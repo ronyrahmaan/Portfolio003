@@ -266,14 +266,17 @@ const Chat = () => {
 
   // Use responsive header height to prevent layout shifts
   const [headerHeight, setHeaderHeight] = useState(180);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const updateHeaderHeight = () => {
-      setHeaderHeight(window.innerWidth < 768 ? 120 : 180);
+    const updateResponsiveValues = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setHeaderHeight(mobile ? 120 : 180);
     };
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-    return () => window.removeEventListener('resize', updateHeaderHeight);
+    updateResponsiveValues();
+    window.addEventListener('resize', updateResponsiveValues);
+    return () => window.removeEventListener('resize', updateResponsiveValues);
   }, []);
 
   return (
@@ -288,20 +291,21 @@ const Chat = () => {
         />
       </div>
 
-      {/* Fixed Avatar Header with Gradient */}
-      <div
-        className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-sm md:bg-gradient-to-b md:from-white md:via-white/80 md:to-transparent"
-      >
-        <div className="py-3 md:py-5">
-          <div className="flex justify-center" style={{transform: 'translateZ(0)', backfaceVisibility: 'hidden'}}>
-            <ClientOnly>
-              <Avatar
-                hasActiveTool={hasActiveTool}
-                videoRef={videoRef}
-                isTalking={isTalking}
-              />
-            </ClientOnly>
-          </div>
+      {/* Fixed Avatar Header with Gradient - Hidden when there's content on mobile */}
+      {(isEmptyState || !isMobile) && (
+        <div
+          className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-sm md:bg-gradient-to-b md:from-white md:via-white/80 md:to-transparent"
+        >
+          <div className="py-3 md:py-5">
+            <div className="flex justify-center" style={{transform: 'translateZ(0)', backfaceVisibility: 'hidden'}}>
+              <ClientOnly>
+                <Avatar
+                  hasActiveTool={hasActiveTool}
+                  videoRef={videoRef}
+                  isTalking={isTalking}
+                />
+              </ClientOnly>
+            </div>
 
           <AnimatePresence>
             {latestUserMessage && !currentAIMessage && (
@@ -324,6 +328,7 @@ const Chat = () => {
           </AnimatePresence>
         </div>
       </div>
+      )}
 
       {/* Main Content Area */}
       <div className="container mx-auto flex h-full max-w-4xl flex-col">
@@ -331,7 +336,7 @@ const Chat = () => {
         <div
           className="flex-1 overflow-y-auto px-2 md:px-4 scroll-smooth"
           style={{
-            paddingTop: `${headerHeight}px`,
+            paddingTop: (isEmptyState || !isMobile) ? `${headerHeight}px` : '20px',
             paddingBottom: '20px',
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden',

@@ -11,7 +11,7 @@ export function Presentation() {
     age: '25 years old',
     location: 'Lubbock, Texas, USA',
     description:
-      "Welcome to my portfolio! 👋\n\nI'm a dedicated AI researcher currently pursuing my Master's in Computer Science at Texas Tech University. My expertise spans machine learning, natural language processing, and real-time data processing systems.\n\nFrom developing transformer-based models for multilingual applications to building LiDAR processing pipelines for infrastructure safety, I'm passionate about creating AI solutions that make a meaningful impact on society.",
+      "Hey 👋\n\nI'm Rahman, a passionate AI Researcher and Graduate Research Assistant at Texas Tech University, specializing in applied machine learning, natural language processing, and real-time sensor data (LiDAR) systems. My work lies at the intersection of AI and societal impact, with hands-on experience building scalable, research-driven applications.\n\nI enjoy blending theory with practical execution—whether it's decoding LiDAR streams or detecting nuances in human language through AI. My vision is to collaborate with forward-thinking companies solving global challenges using intelligent systems and ethical AI practices.",
     src: '/main.jpg',
     fallbackSrc:
       'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3',

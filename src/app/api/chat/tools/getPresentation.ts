@@ -11,13 +11,13 @@ export const getPresentation = tool({
   async execute() {
     return {
       presentation:
-        "Hey 👋\n\nI'm Rahman, a passionate AI Researcher and Graduate Research Assistant at Texas Tech University, specializing in applied machine learning, natural language processing, and real-time sensor data (LiDAR) systems. My work lies at the intersection of AI and societal impact, with hands-on experience building scalable, research-driven applications.\n\n" +
+        "Hello there! 👋\n\nI'm Md A Rahman, currently pursuing my Master's in Computer Science at Texas Tech University while working as a Graduate Research Assistant. My research focuses on cutting-edge applications of AI, particularly in machine learning, natural language processing, and sensor data analysis.\n\n" +
 
-        "I enjoy blending theory with practical execution - from developing transformer-based models for multilingual applications to building real-time LiDAR processing pipelines for infrastructure safety. My experience spans across domains: transportation engineering, medical AI diagnostics, and generative AI technologies.\n\n" +
+        "My current work involves developing innovative solutions for real-world challenges - from creating multilingual transformer models to processing real-time LiDAR data for infrastructure monitoring. I'm particularly excited about the potential of AI to solve complex societal problems.\n\n" +
 
-        "Here, you'll find insights into my research projects, professional experiences, and the skills I've developed throughout my journey. I'm passionate about collaborating with forward-thinking individuals and organizations to tackle global challenges using intelligent systems.\n\n" +
+        "Through this interactive portfolio, you can learn more about my research projects, technical skills, and professional journey. I'm always eager to discuss AI research, explore collaboration opportunities, or share insights about emerging technologies.\n\n" +
 
-        "Feel free to explore my projects or ask any questions about my work or potential collaboration opportunities. What specific aspect of AI research interests you most?",
+        "What would you like to know more about? Feel free to ask about my projects, research interests, or anything else that comes to mind!",
     };
   },
 });

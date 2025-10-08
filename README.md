@@ -18,7 +18,7 @@ Ask a question — my AI avatar replies instantly with relevant information abou
 This is not just a portfolio.
 It's a **conversation tailored to your interests** in AI and research.
 
-➡️ **Try it now:** [https://mdrahman-ai.vercel.app](https://mdrahman-ai.vercel.app)
+➡️ **Try it now:** [https://md-rahman-ai.vercel.app](https://md-rahman-ai.vercel.app)
 *What will you discover about my AI research?*
 
 ## 🚀 How to run

@@ -150,16 +150,14 @@ export default function Home() {
 
       {/* centre portrait */}
       <div className="relative z-10 h-48 w-40 overflow-hidden rounded-xl sm:h-56 sm:w-48 md:h-80 md:w-68">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="h-full w-full object-cover object-center"
-        >
-          <source src="/final_memojis_ios.mp4" type="video/mp4" />
-          <source src="/final_memojis.webm" type="video/webm" />
-        </video>
+        <Image
+          src="/landing-memojis.png"
+          alt="Md A Rahman – Professional Portrait"
+          width={800}
+          height={800}
+          priority
+          className="object-cover object-center"
+        />
       </div>
 
       {/* input + quick buttons */}

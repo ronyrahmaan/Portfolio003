@@ -288,11 +288,16 @@ const Chat = () => {
             onClick={() => window.location.href = '/'}
             className="flex items-center justify-center w-16 h-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200 shadow-lg hover:bg-white transition-all hover:scale-105"
           >
-            <img
-              src="/landing-memojis.png"
-              alt="Home"
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
               className="w-12 h-12 object-contain scale-[1.2]"
-            />
+            >
+              <source src="/final_memojis_ios.mp4" type="video/mp4" />
+              <source src="/final_memojis.webm" type="video/webm" />
+            </video>
           </button>
         </div>
       )}

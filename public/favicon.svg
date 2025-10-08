@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <!-- Vibrant gradient -->
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00F5FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF00FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF1493;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Dark background -->
+    <linearGradient id="darkBg">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f0f1e;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark background with rounded corners -->
+  <rect width="32" height="32" rx="8" fill="url(#darkBg)"/>
+
+  <!-- Hexagon frame -->
+  <path d="M 16 3 L 27 9 L 27 23 L 16 29 L 5 23 L 5 9 Z"
+        fill="none"
+        stroke="url(#iconGrad)"
+        stroke-width="2"
+        opacity="1"
+        filter="url(#glow)"/>
+
+  <!-- Bold R letter -->
+  <path d="M 9 8 L 9 24 M 9 8 L 19 8 Q 23 8 23 13 T 19 18 L 9 18 M 17 18 L 23 24"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+  <!-- R gradient overlay -->
+  <path d="M 9 8 L 9 24 M 9 8 L 19 8 Q 23 8 23 13 T 19 18 L 9 18 M 17 18 L 23 24"
+        fill="none"
+        stroke="url(#iconGrad)"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        opacity="0.9"/>
+
+  <!-- Corner accent dots -->
+  <circle cx="16" cy="3" r="1.5" fill="#00F5FF" opacity="0.9"/>
+  <circle cx="27" cy="9" r="1.5" fill="#FF00FF" opacity="0.9"/>
+  <circle cx="27" cy="23" r="1.5" fill="#FF1493" opacity="0.9"/>
+  <circle cx="16" cy="29" r="1.5" fill="#00F5FF" opacity="0.9"/>
+  <circle cx="5" cy="23" r="1.5" fill="#FF00FF" opacity="0.9"/>
+  <circle cx="5" cy="9" r="1.5" fill="#FF1493" opacity="0.9"/>
+</svg>

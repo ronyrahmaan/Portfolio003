@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface SimpleTypingTextProps {
   texts: string[];
@@ -14,45 +14,54 @@ export function SimpleTypingText({
   onIndexChange
 }: SimpleTypingTextProps) {
   const [display, setDisplay] = useState('');
-  const [textIndex, setTextIndex] = useState(0);
+  const indexRef = useRef(0);
+  const charRef = useRef(0);
+  const isDeletingRef = useRef(false);
+  const textsRef = useRef(texts);
+  const onIndexChangeRef = useRef(onIndexChange);
+
+  // Update refs when props change
+  useEffect(() => {
+    textsRef.current = texts;
+  }, [texts]);
 
   useEffect(() => {
-    let currentIndex = 0;
-    let currentChar = 0;
-    let isDeleting = false;
+    onIndexChangeRef.current = onIndexChange;
+  }, [onIndexChange]);
+
+  useEffect(() => {
     let timeoutId: NodeJS.Timeout;
 
     const type = () => {
-      const currentText = texts[currentIndex];
+      const currentText = textsRef.current[indexRef.current];
 
-      if (!isDeleting) {
+      if (!isDeletingRef.current) {
         // Typing
-        if (currentChar < currentText.length) {
-          setDisplay(currentText.substring(0, currentChar + 1));
-          currentChar++;
+        if (charRef.current < currentText.length) {
+          setDisplay(currentText.substring(0, charRef.current + 1));
+          charRef.current++;
           timeoutId = setTimeout(type, 100);
         } else {
           // Pause before deleting
           timeoutId = setTimeout(() => {
-            isDeleting = true;
+            isDeletingRef.current = true;
             type();
           }, 2500);
         }
       } else {
         // Deleting
-        if (currentChar > 0) {
-          currentChar--;
-          setDisplay(currentText.substring(0, currentChar));
+        if (charRef.current > 0) {
+          charRef.current--;
+          setDisplay(currentText.substring(0, charRef.current));
           timeoutId = setTimeout(type, 50);
         } else {
           // Move to next text
-          isDeleting = false;
-          currentIndex = (currentIndex + 1) % texts.length;
+          isDeletingRef.current = false;
+          indexRef.current = (indexRef.current + 1) % textsRef.current.length;
 
-          // Update state and notify parent
-          setTextIndex(currentIndex);
-          if (onIndexChange) {
-            onIndexChange(currentIndex);
+          // Notify parent
+          if (onIndexChangeRef.current) {
+            onIndexChangeRef.current(indexRef.current);
           }
 
           // Start typing next word
@@ -67,7 +76,7 @@ export function SimpleTypingText({
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [texts, onIndexChange]);
+  }, []); // Empty dependency array - animation runs once
 
   return (
     <span className={className}>

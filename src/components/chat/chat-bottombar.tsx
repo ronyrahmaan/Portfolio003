@@ -50,10 +50,10 @@ export default function ChatBottombar({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full pb-2 md:pb-8"
+      className="w-full pb-2 px-2 md:pb-8 md:px-0"
     >
       <form onSubmit={handleSubmit} className="relative w-full md:px-4">
-        <div className="mx-auto max-w-4xl flex items-center rounded-full border border-[#E5E5E9] bg-[#ECECF0] py-1.5 pr-1.5 pl-4">
+        <div className="mx-auto max-w-4xl flex items-center rounded-full border border-[#E5E5E9] bg-[#ECECF0] py-1.5 pr-1.5 pl-3 md:pl-4">
           <input
             ref={inputRef}
             type="text"
@@ -63,14 +63,14 @@ export default function ChatBottombar({
             placeholder={
               isToolInProgress ? 'Tool is in progress...' : 'Ask me anything'
             }
-            className="text-base w-full border-none bg-transparent text-black placeholder:text-gray-500 focus:outline-none"
+            className="text-sm md:text-base w-full border-none bg-transparent text-black placeholder:text-gray-500 focus:outline-none"
             disabled={isToolInProgress || isLoading}
           />
 
           <button
             type="submit"
             disabled={isLoading || !input.trim() || isToolInProgress}
-            className="flex items-center justify-center rounded-full bg-[#0171E3] p-1.5 text-white disabled:opacity-50"
+            className="flex items-center justify-center rounded-full bg-[#0171E3] p-1.5 md:p-2 text-white disabled:opacity-50 min-w-[32px]"
             onClick={(e) => {
               if (isLoading) {
                 e.preventDefault();
@@ -78,7 +78,7 @@ export default function ChatBottombar({
               }
             }}
           >
-            <ArrowRight className="h-5 w-5" />
+            <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
           </button>
         </div>
       </form>

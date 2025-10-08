@@ -55,7 +55,7 @@ export function SimplifiedChatView({
   console.log('currentTool', currentTool);
 
   return (
-    <motion.div {...MOTION_CONFIG} className="flex h-full w-full flex-col px-4">
+    <motion.div {...MOTION_CONFIG} className="flex h-full w-full flex-col px-2 md:px-4">
       {/* Single scrollable container for both tool and text content */}
       <div className="custom-scrollbar flex h-full w-full flex-col overflow-y-auto">
         {/* Tool invocation result - displayed at the top */}

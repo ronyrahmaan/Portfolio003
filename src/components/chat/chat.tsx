@@ -74,7 +74,7 @@ const Avatar = dynamic<AvatarProps>(
 
       // Conditional rendering based on detection
       return (
-        <div className="flex items-center justify-center rounded-full h-28 w-28">
+        <div className="flex items-center justify-center rounded-full h-20 w-20 md:h-28 md:w-28">
           <div
             className="relative cursor-pointer"
             onClick={() => (window.location.href = '/')}
@@ -83,12 +83,12 @@ const Avatar = dynamic<AvatarProps>(
               <img
                 src="/landing-memojis.png"
                 alt="iOS avatar"
-                className="h-full w-full scale-[1.8] object-contain"
+                className="h-full w-full scale-[1.4] md:scale-[1.8] object-contain"
               />
             ) : (
               <video
                 ref={videoRef}
-                className="h-full w-full scale-[1.8] object-contain"
+                className="h-full w-full scale-[1.4] md:scale-[1.8] object-contain"
                 muted
                 playsInline
                 loop
@@ -264,12 +264,21 @@ const Chat = () => {
   const isEmptyState =
     !currentAIMessage && !latestUserMessage && !loadingSubmit;
 
-  // Use fixed header height to prevent layout shifts
-  const headerHeight = 180;
+  // Use responsive header height to prevent layout shifts
+  const [headerHeight, setHeaderHeight] = useState(180);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      setHeaderHeight(window.innerWidth < 768 ? 120 : 180);
+    };
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
+  }, []);
 
   return (
     <div className="relative h-screen overflow-hidden" style={{willChange: 'auto'}}>
-      <div className="absolute top-6 right-8 z-51 flex flex-col-reverse items-center justify-center gap-1 md:flex-row">
+      <div className="absolute top-2 right-2 md:top-6 md:right-8 z-[51] flex flex-col-reverse items-center justify-center gap-1 md:flex-row">
         <WelcomeModal
           trigger={
             <div className="hover:bg-accent cursor-pointer rounded-2xl px-3 py-1.5">
@@ -281,13 +290,9 @@ const Chat = () => {
 
       {/* Fixed Avatar Header with Gradient */}
       <div
-        className="fixed top-0 right-0 left-0 z-50"
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%)',
-        }}
+        className="fixed top-0 right-0 left-0 z-50 bg-white/95 backdrop-blur-sm md:bg-gradient-to-b md:from-white md:via-white/80 md:to-transparent"
       >
-        <div className="py-5">
+        <div className="py-3 md:py-5">
           <div className="flex justify-center" style={{transform: 'translateZ(0)', backfaceVisibility: 'hidden'}}>
             <ClientOnly>
               <Avatar
@@ -302,7 +307,7 @@ const Chat = () => {
             {latestUserMessage && !currentAIMessage && (
               <motion.div
                 {...MOTION_CONFIG}
-                className="mx-auto flex max-w-4xl px-3"
+                className="mx-auto flex max-w-4xl px-2 md:px-3 mt-2 md:mt-0"
               >
                 <ChatBubble variant="sent">
                   <ChatBubbleMessage>
@@ -324,9 +329,10 @@ const Chat = () => {
       <div className="container mx-auto flex h-full max-w-4xl flex-col">
         {/* Scrollable Chat Content */}
         <div
-          className="flex-1 overflow-y-auto px-2 scroll-smooth"
+          className="flex-1 overflow-y-auto px-2 md:px-4 scroll-smooth"
           style={{
-            paddingTop: `${headerHeight - 20}px`,
+            paddingTop: `${headerHeight}px`,
+            paddingBottom: '20px',
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden',
             perspective: '1000px'

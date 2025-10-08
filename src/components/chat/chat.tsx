@@ -281,17 +281,17 @@ const Chat = () => {
 
   return (
     <div className="relative h-screen overflow-hidden" style={{willChange: 'auto'}}>
-      {/* Mobile home button with memoji when avatar is hidden */}
+      {/* Mobile home button with memoji when avatar is hidden - centered like desktop */}
       {isMobile && !isEmptyState && (
-        <div className="fixed top-2 left-2 z-[51]">
+        <div className="fixed top-4 left-0 right-0 z-[51] flex justify-center">
           <button
             onClick={() => window.location.href = '/'}
-            className="flex items-center justify-center w-12 h-12 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200 shadow-lg hover:bg-white transition-all hover:scale-105"
+            className="flex items-center justify-center w-16 h-16 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200 shadow-lg hover:bg-white transition-all hover:scale-105"
           >
             <img
               src="/landing-memojis.png"
               alt="Home"
-              className="w-8 h-8 object-contain"
+              className="w-12 h-12 object-contain scale-[1.2]"
             />
           </button>
         </div>
@@ -352,7 +352,7 @@ const Chat = () => {
         <div
           className="flex-1 overflow-y-auto px-2 md:px-4 scroll-smooth"
           style={{
-            paddingTop: (isEmptyState || !isMobile) ? `${headerHeight}px` : '20px',
+            paddingTop: (isEmptyState || !isMobile) ? `${headerHeight}px` : '80px',
             paddingBottom: '20px',
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden',

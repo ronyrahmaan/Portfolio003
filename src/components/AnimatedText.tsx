@@ -236,36 +236,39 @@ export function TypingText({
 
   useEffect(() => {
     const targetText = texts[currentTextIndex];
+    let timeout: NodeJS.Timeout;
 
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        // Typing
-        if (currentText.length < targetText.length) {
+    if (!isDeleting) {
+      // Typing
+      if (currentText.length < targetText.length) {
+        timeout = setTimeout(() => {
           setCurrentText(targetText.slice(0, currentText.length + 1));
-        } else {
-          // Pause before deleting
-          setTimeout(() => setIsDeleting(true), pauseTime);
-        }
+        }, typingSpeed);
       } else {
-        // Deleting
-        if (currentText.length > 0) {
+        // Pause before deleting
+        timeout = setTimeout(() => {
+          setIsDeleting(true);
+        }, pauseTime);
+      }
+    } else {
+      // Deleting
+      if (currentText.length > 0) {
+        timeout = setTimeout(() => {
           setCurrentText(currentText.slice(0, -1));
-        } else {
+        }, deletingSpeed);
+      } else {
+        // Move to next text
+        timeout = setTimeout(() => {
           setIsDeleting(false);
           const newIndex = (currentTextIndex + 1) % texts.length;
           setCurrentTextIndex(newIndex);
           onIndexChange?.(newIndex);
-        }
+        }, 100);
       }
-    }, isDeleting ? deletingSpeed : typingSpeed);
+    }
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime]);
-
-  // Call onIndexChange when component mounts and when index changes
-  useEffect(() => {
-    onIndexChange?.(currentTextIndex);
-  }, [currentTextIndex, onIndexChange]);
+  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime, onIndexChange]);
 
   return (
     <span className={className}>

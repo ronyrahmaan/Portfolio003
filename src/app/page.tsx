@@ -12,7 +12,8 @@
 import FluidCursor from '@/components/FluidCursor';
 import { Button } from '@/components/ui/button';
 import WelcomeModal from '@/components/welcome-modal';
-import AnimatedText, { TypingText } from '@/components/AnimatedText';
+import AnimatedText from '@/components/AnimatedText';
+import { SimpleTypingText } from '@/components/SimpleTypingText';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -147,12 +148,9 @@ export default function Home() {
 
         <h2 className="text-secondary-foreground mt-1 text-base font-medium md:text-lg lg:text-lg xl:text-lg font-space-grotesk">
           Hey, I'm{' '}
-          <TypingText
+          <SimpleTypingText
             texts={["Md", "Md A", "Md A Rahman"]}
             className="inline-block font-space-grotesk"
-            typingSpeed={120}
-            deletingSpeed={80}
-            pauseTime={3000}
           />
         </h2>
         {/* Main profession headline */}
@@ -190,12 +188,9 @@ export default function Home() {
               text-xs font-medium tracking-wide sm:text-sm md:text-sm`}
           >
             <span className="relative font-space-grotesk">
-              <TypingText
+              <SimpleTypingText
                 texts={roles}
                 className="inline-block"
-                typingSpeed={60}
-                deletingSpeed={30}
-                pauseTime={2500}
                 onIndexChange={handleRoleIndexChange}
               />
             </span>

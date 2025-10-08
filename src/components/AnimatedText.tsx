@@ -221,68 +221,73 @@ export function TypingText({
   onIndexChange
 }: TypingTextProps) {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [displayText, setDisplayText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Cursor blinking
   useEffect(() => {
-    // Cursor blinking
     const cursorInterval = setInterval(() => {
       setShowCursor(prev => !prev);
     }, 500);
-
     return () => clearInterval(cursorInterval);
   }, []);
 
+  // Main typing animation with single effect
   useEffect(() => {
-    // Clear any existing timeout
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
+    let charIndex = 0;
+    let isDeleting = false;
+    let textIndex = 0;
+    let timeout: NodeJS.Timeout;
 
-    const targetText = texts[currentTextIndex];
+    const animate = () => {
+      const currentFullText = texts[textIndex];
 
-    if (!isDeleting) {
-      // Typing
-      if (currentText.length < targetText.length) {
-        timeoutRef.current = setTimeout(() => {
-          setCurrentText(targetText.slice(0, currentText.length + 1));
-        }, typingSpeed);
-      } else if (currentText === targetText) {
-        // Pause before deleting
-        timeoutRef.current = setTimeout(() => {
-          setIsDeleting(true);
-        }, pauseTime);
-      }
-    } else {
-      // Deleting
-      if (currentText.length > 0) {
-        timeoutRef.current = setTimeout(() => {
-          setCurrentText(prev => prev.slice(0, -1));
-        }, deletingSpeed);
+      if (!isDeleting) {
+        // Typing forward
+        if (charIndex < currentFullText.length) {
+          setDisplayText(currentFullText.slice(0, charIndex + 1));
+          charIndex++;
+          timeout = setTimeout(animate, typingSpeed);
+        } else {
+          // Finished typing, pause then start deleting
+          timeout = setTimeout(() => {
+            isDeleting = true;
+            animate();
+          }, pauseTime);
+        }
       } else {
-        // Move to next text
-        const newIndex = (currentTextIndex + 1) % texts.length;
-        setCurrentTextIndex(newIndex);
-        setIsDeleting(false);
-        // Notify parent immediately when index changes
-        if (onIndexChange) {
-          onIndexChange(newIndex);
+        // Deleting
+        if (charIndex > 0) {
+          charIndex--;
+          setDisplayText(currentFullText.slice(0, charIndex));
+          timeout = setTimeout(animate, deletingSpeed);
+        } else {
+          // Finished deleting, move to next text
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          setCurrentTextIndex(textIndex);
+
+          // Notify parent of index change
+          if (onIndexChange) {
+            onIndexChange(textIndex);
+          }
+
+          timeout = setTimeout(animate, 100);
         }
       }
-    }
+    };
+
+    // Start animation
+    timeout = setTimeout(animate, 100);
 
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      if (timeout) clearTimeout(timeout);
     };
-  }, [currentText, isDeleting, currentTextIndex, texts, typingSpeed, deletingSpeed, pauseTime, onIndexChange]);
+  }, [texts, typingSpeed, deletingSpeed, pauseTime, onIndexChange]);
 
   return (
     <span className={className}>
-      {currentText}
+      {displayText}
       <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
         |
       </span>

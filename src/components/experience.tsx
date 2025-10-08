@@ -150,13 +150,14 @@ export function Experience() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
         className="mt-8 text-center"
+        style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
       >
-        <div className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
+        <div className="mx-auto max-w-4xl rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
           <h3 className="text-xl font-semibold">
-            Ready to Collaborate on Transportation Innovation?
+            Ready to Collaborate on AI Innovation?
           </h3>
-          <p className="mt-2 text-blue-100">
-            Let's discuss how AI can revolutionize transportation infrastructure, enhance safety systems, optimize traffic flow, and advance autonomous vehicle technologies
+          <p className="mt-2 text-blue-100 text-sm md:text-base leading-relaxed">
+            Let's explore how AI can transform industries, solve complex challenges, and create innovative solutions across diverse domains
           </p>
         </div>
       </motion.div>

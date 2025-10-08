@@ -16,7 +16,7 @@ import {
   ChatBubbleMessage,
 } from '@/components/ui/chat/chat-bubble';
 import WelcomeModal from '@/components/welcome-modal';
-import { Info } from 'lucide-react';
+import { Info, Home } from 'lucide-react';
 import HelperBoost from './HelperBoost';
 
 // ClientOnly component for client-side rendering
@@ -281,6 +281,22 @@ const Chat = () => {
 
   return (
     <div className="relative h-screen overflow-hidden" style={{willChange: 'auto'}}>
+      {/* Mobile home button with memoji when avatar is hidden */}
+      {isMobile && !isEmptyState && (
+        <div className="fixed top-2 left-2 z-[51]">
+          <button
+            onClick={() => window.location.href = '/'}
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-white/95 backdrop-blur-sm border border-gray-200 shadow-lg hover:bg-white transition-all hover:scale-105"
+          >
+            <img
+              src="/landing-memojis.png"
+              alt="Home"
+              className="w-8 h-8 object-contain"
+            />
+          </button>
+        </div>
+      )}
+
       <div className="absolute top-2 right-2 md:top-6 md:right-8 z-[51] flex flex-col-reverse items-center justify-center gap-1 md:flex-row">
         <WelcomeModal
           trigger={

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SimpleTypingTextProps {
   texts: string[];
@@ -13,58 +13,65 @@ export function SimpleTypingText({
   className = '',
   onIndexChange
 }: SimpleTypingTextProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [displayText, setDisplayText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
-  const indexRef = useRef(0);
+  const [display, setDisplay] = useState('');
+  const [textIndex, setTextIndex] = useState(0);
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    let charIndex = 0;
-    let localTextIndex = 0;
-    let typing = true;
+    let currentIndex = 0;
+    let currentChar = 0;
+    let isDeleting = false;
+    let timeoutId: NodeJS.Timeout;
 
-    const updateText = () => {
-      const currentText = texts[localTextIndex];
+    const type = () => {
+      const currentText = texts[currentIndex];
 
-      if (typing) {
-        // Type forward
-        if (charIndex <= currentText.length) {
-          setDisplayText(currentText.slice(0, charIndex));
-          charIndex++;
+      if (!isDeleting) {
+        // Typing
+        if (currentChar < currentText.length) {
+          setDisplay(currentText.substring(0, currentChar + 1));
+          currentChar++;
+          timeoutId = setTimeout(type, 100);
         } else {
-          // Pause then start deleting
-          setTimeout(() => {
-            typing = false;
-          }, 2000);
+          // Pause before deleting
+          timeoutId = setTimeout(() => {
+            isDeleting = true;
+            type();
+          }, 2500);
         }
       } else {
-        // Delete backward
-        if (charIndex > 0) {
-          charIndex--;
-          setDisplayText(currentText.slice(0, charIndex));
+        // Deleting
+        if (currentChar > 0) {
+          currentChar--;
+          setDisplay(currentText.substring(0, currentChar));
+          timeoutId = setTimeout(type, 50);
         } else {
           // Move to next text
-          localTextIndex = (localTextIndex + 1) % texts.length;
-          setCurrentIndex(localTextIndex);
+          isDeleting = false;
+          currentIndex = (currentIndex + 1) % texts.length;
+
+          // Update state and notify parent
+          setTextIndex(currentIndex);
           if (onIndexChange) {
-            onIndexChange(localTextIndex);
+            onIndexChange(currentIndex);
           }
-          typing = true;
+
+          // Start typing next word
+          timeoutId = setTimeout(type, 500);
         }
       }
     };
 
-    intervalId = setInterval(updateText, typing ? 80 : 40);
+    // Start the animation
+    type();
 
     return () => {
-      clearInterval(intervalId);
+      if (timeoutId) clearTimeout(timeoutId);
     };
-  }, []);
+  }, [texts, onIndexChange]);
 
   return (
     <span className={className}>
-      {displayText}
+      {display}
       <span className="animate-pulse">|</span>
     </span>
   );

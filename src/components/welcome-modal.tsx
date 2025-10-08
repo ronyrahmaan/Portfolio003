@@ -36,15 +36,15 @@ export default function WelcomeModal({ trigger }: WelcomeModalProps) {
   const defaultTrigger = (
     <Button
       variant="ghost"
-      className="h-auto w-auto cursor-pointer rounded-xl bg-white/30 p-2 shadow-lg backdrop-blur-lg hover:bg-white/60 focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+      className="group h-auto w-auto cursor-pointer rounded-2xl bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 p-3 shadow-2xl backdrop-blur-xl border border-white/20 hover:from-blue-500/30 hover:via-purple-500/30 hover:to-pink-500/30 hover:shadow-3xl hover:scale-105 transition-all duration-300 focus-visible:bg-transparent focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
       onClick={() => setIsOpen(true)}
     >
       <Image
         src="/logo-rahman.svg"
-        width={100}
-        height={100}
-        alt="Logo"
-        className="w-5 md:w-6"
+        width={120}
+        height={120}
+        alt="Rahman Logo"
+        className="w-8 md:w-10 lg:w-12 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg"
       />
       <span className="sr-only">About Rahman</span>
     </Button>

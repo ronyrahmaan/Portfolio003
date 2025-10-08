@@ -35,7 +35,7 @@ import OpenToCollaborateModal from '@/components/open-to-collaborate-modal';
 // Modern, engaging prompts tailored to showcase AI research expertise
 const questions = {
   About: 'Tell me about your background and what drives your AI research',
-  Research: 'What cutting-edge AI projects are you working on?',
+  'Projects/Research': 'What cutting-edge AI projects are you working on?',
   'Tech Stack': "What's your technical expertise and preferred tools?",
   Achievements: 'What are your proudest accomplishments and milestones?',
   Connect: 'How can we collaborate or get in touch?',
@@ -44,7 +44,7 @@ const questions = {
 
 const questionConfig = [
   { key: 'About', color: '#3B82F6', icon: User },
-  { key: 'Research', color: '#8B5CF6', icon: Microscope },
+  { key: 'Projects/Research', color: '#8B5CF6', icon: Microscope },
   { key: 'Tech Stack', color: '#10B981', icon: Code2 },
   { key: 'Achievements', color: '#F59E0B', icon: Trophy },
   { key: 'Connect', color: '#EC4899', icon: MessageSquare },
